@@ -1,20 +1,18 @@
 import socket
 
+from config import BaseConfig as cfg
+
 
 def main():
-    host = '127.0.0.1'
-    port = 5001
-    INPUT_MSG = "Send a msg to server( 'q' to quit)."
-
     client_socket = socket.socket()
-    client_socket.connect((host, port))
+    client_socket.connect((cfg.HOST, cfg.PORT))
 
-    msg_server = input(INPUT_MSG)
+    msg_server = input(cfg.INPUT_MSG)
     while msg_server != "q":
         client_socket.send(msg_server.encode())
         data = client_socket.recv(1024).decode()
         print("Message from server: {}".format(data))
-        msg_server = input(INPUT_MSG)
+        msg_server = input(cfg.INPUT_MSG)
 
     client_socket.close()
 

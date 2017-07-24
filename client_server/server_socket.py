@@ -1,12 +1,11 @@
 import socket
+from config import BaseConfig as cfg
 
 
 def main():
-    host = '127.0.0.1'
-    port = 5001
 
     server_socket = socket.socket()
-    server_socket.bind((host, port))
+    server_socket.bind((cfg.HOST, cfg.PORT))
 
     server_socket.listen(1)
     conn, addr = server_socket.accept()
@@ -16,9 +15,8 @@ def main():
         data = conn.recv(1024).decode()
         if not data:
             break
-        print("From connected user: {}".format(data))
-        print("Received from User: {}".format(data))
-        data = input("Send some data: ")
+        print("Received from client: {}".format(data))
+        data = input("Send some data to client: ")
         conn.send(data.encode())
 
     conn.close()
